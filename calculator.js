@@ -38,6 +38,31 @@ app.post("/", function(req, res){
     res.send(num1 + ' ' + op + ' ' + num2 + ' = ' + result)
 })
 
+
+app.get("/bmiCalculator", function(req,res){
+    res.sendFile(__dirname + "/bmiCalculator.html");
+})
+
+app.post("/bmiCalculator", function(req,res){
+    let weight = parseFloat(req.body.weight);
+    let height = parseFloat(req.body.height);
+    let bmi = weight / ((height/100)**2);
+    bmi =bmi.toFixed(1);
+
+    if (bmi < 18.5){
+        res.send("Your BMI is " + bmi + " and you are underweight");
+    }
+    else if (bmi >=18.5 & bmi <= 24.9 ){
+        res.send("Your BMI is " + bmi + " and you are healthy");
+    }
+    else if (bmi >=25 & bmi <= 29.9 ){
+        res.send("Your BMI is " + bmi + " and you are overweight");
+    }
+    else if (bmi >= 30){
+        res.send("Your BMI is " + bmi + " and you are obese");
+    }
+})
+
 app.listen(3000, function(){
     console.log("Server is running on port 3000!");
 })
